@@ -1,6 +1,6 @@
 import useTodos from "../hooks/useTodos";
 
-const TodoListWQuery = () => {
+const TodoListWQueryHook = () => {
 
 
     const {data: todos,error,isLoading} = useTodos()
@@ -23,4 +23,4 @@ const TodoListWQuery = () => {
   )
 }
 
-export default TodoListWQuery
+export default TodoListWQueryHook;
