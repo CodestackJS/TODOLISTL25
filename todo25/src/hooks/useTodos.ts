@@ -9,14 +9,20 @@ interface Todo{
     completed: boolean
 }
 
-const useTodos = (userId: number | undefined) => {
+interface TodoQuery {
+    page: number;
+    pageSize: number
+}
+
+const useTodos = (query: TodoQuery) => {
    
 
     const fetchTodos = () =>
         axios
         .get<Todo[]>("https://jsonplaceholder.typicode.com/todos", {
             params:{
-                userId
+                _start:(query.page -1) * query.pageSize,
+                _limit: query.pageSize
             }
 
         })
@@ -24,7 +30,8 @@ const useTodos = (userId: number | undefined) => {
         // .catch(error => error)
         
         return useQuery<Todo[],Error>({
-            queryKey: userId ? ["users", userId, "todos"]:["todos"],
+            // queryKey: userId ? ["users", userId, "todos"]:["todos"],
+            queryKey: ["todo",query],
             queryFn: fetchTodos,
             staleTime: 10 *1000 //stale to 10 sec
         });
